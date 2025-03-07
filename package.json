@@ -1,0 +1,54 @@
+{
+    "name": "hierarchical-error",
+    "version": "0.0.1",
+    "description": "Hierarchical Error - Reducing log messages and maintaining context.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "engines": {
+        "npm": ">=8.11.0",
+        "node": ">=16.15.1"
+    },
+    "scripts": {
+        "clean": "rimraf dist",
+        "build": "npm run clean && tsc",
+        "postbuild": "cpy '**/*' '!**/*.ts' '!**/*.tsx' ../dist/ --cwd=src/ --no-overwrite --parents",
+        "test": "npx jest --coverage --detectOpenHandles",
+        "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts' './*.json' './*.js' './*.mjs'",
+        "lint": "eslint --fix",
+        "prepare": "husky"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pjgrenyer/hierarchical-error.git"
+    },
+    "keywords": [
+        "hierarchical-error"
+    ],
+    "author": "Paul Grenyer",
+    "license": "SEE LICENSE IN LICENSE",
+    "bugs": {
+        "url": "https://github.com/pjgrenyer/hierarchical-error/issues"
+    },
+    "homepage": "https://github.com/pjgrenyer/hierarchical-error#readme",
+    "devDependencies": {
+        "@babel/preset-env": "^7.25.4",
+        "@babel/preset-typescript": "^7.24.7",
+        "@eslint/js": "^9.11.1",
+        "@eslint/plugin-kit": "^0.2.3",
+        "@types/jest": "^29.5.13",
+        "cpy-cli": "^5.0.0",
+        "cross-spawn": "^7.0.6",
+        "eslint": "^9.11.1",
+        "globals": "^15.9.0",
+        "husky": "^9.1.6",
+        "jest": "^29.7.0",
+        "prettier": "^3.3.3",
+        "rimraf": "^6.0.1",
+        "typescript": "^5.6.2",
+        "typescript-eslint": "^8.8.0"
+    },
+    "dependencies": {}
+}
