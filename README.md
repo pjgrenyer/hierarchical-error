@@ -43,7 +43,7 @@ const getController = () => {
     try {
         callService();
     } catch (error: any) {
-        if (error instanceof HierarchicalError) {
+        if (isHierarchicalError(error)) {
             log(error.message, error.toContextJson());
         } else {
             log(error);
