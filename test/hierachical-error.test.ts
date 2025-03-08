@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { HierarchicalError } from './../src/hierarchical-error';
+import { HierarchicalError, isHierarchicalError } from './../src/hierarchical-error';
 
 describe('Hierarchical Error', () => {
     it('should have corect output', () => {
@@ -24,6 +24,16 @@ describe('Hierarchical Error', () => {
                 message: 'Service failed.',
             });
         }
+    });
+
+    describe('isHierarchicalError', () => {
+        it('is not HierarchicalError', () => {
+            expect(isHierarchicalError(new Error())).toBeFalsy();
+        });
+
+        it('is HierarchicalError', () => {
+            expect(isHierarchicalError(new HierarchicalError('message', { someContext: 'someContext' }, new Error()))).toBeTruthy();
+        });
     });
 });
 

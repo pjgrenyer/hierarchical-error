@@ -23,3 +23,6 @@ export class HierarchicalError extends Error {
         cause: this.cause instanceof HierarchicalError ? this.cause.toContextJson() : this.cause,
     });
 }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isHierarchicalError = (error: any) => error instanceof HierarchicalError;
