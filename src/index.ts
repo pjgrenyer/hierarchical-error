@@ -1,2 +1,2 @@
-import { HierarchicalError } from './hierarchical-error';
-export { HierarchicalError };
+import { HierarchicalError, isHierarchicalError } from './hierarchical-error';
+export { HierarchicalError, isHierarchicalError };
