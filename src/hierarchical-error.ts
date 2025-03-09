@@ -13,7 +13,7 @@ export class HierarchicalError extends Error {
     readonly context;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    constructor(message: string, context?: any, cause?: any) {
+    constructor(message: string, context?: any, cause?: HierarchicalContextItem | any) {
         super(message);
         this.cause = cause;
         this.context = context;
