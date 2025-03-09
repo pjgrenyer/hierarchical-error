@@ -17,7 +17,7 @@
         "postbuild": "cpy '**/*' '!**/*.ts' '!**/*.tsx' ../dist/ --cwd=src/ --no-overwrite --parents",
         "test": "npx jest --coverage --detectOpenHandles",
         "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts' './*.json' './*.js' './*.mjs'",
-        "lint": "eslint --fix",
+        "lint": "npm run format && eslint --fix",
         "prepare": "husky"
     },
     "repository": {

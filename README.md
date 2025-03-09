@@ -44,7 +44,7 @@ const getController = () => {
         callService();
     } catch (error: any) {
         if (isHierarchicalError(error)) {
-            log(error.message, error.toContextJson());
+            log(error.message, error.toJSON());
         } else {
             log(error);
         }
