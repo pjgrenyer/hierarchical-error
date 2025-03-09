@@ -29,7 +29,7 @@ describe('Hierarchical Error', () => {
         } catch (error: any) {
             const hierarchicalError = error as HierarchicalError;
             expect(hierarchicalError.message).toEqual('Service failed.');
-            expect(hierarchicalError.toContextJson()).toEqual(context);
+            expect(hierarchicalError.toJSON()).toEqual(context);
             expect(hierarchicalError.toJSON()).toEqual(context);
         }
     });
