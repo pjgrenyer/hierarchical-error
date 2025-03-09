@@ -1,3 +1,5 @@
+import { errorToJson } from './error-to-json';
+
 interface HierarchicalContextItem {
     message: string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,7 +22,7 @@ export class HierarchicalError extends Error {
     toContextJson = (): HierarchicalContextItem => ({
         message: this.message,
         context: this.context,
-        cause: isHierarchicalError(this.cause) ? this.cause.toContextJson() : this.cause,
+        cause: isHierarchicalError(this.cause) ? this.cause.toContextJson() : errorToJson(this.cause),
     });
 
     toJSON = () => this.toContextJson();
