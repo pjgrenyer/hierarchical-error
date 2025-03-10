@@ -10,6 +10,8 @@ By encapsulating the original error, its context, and any additional information
 
 By using the HierarchicalError class, developers can maintain the integrity of the error message while preventing log clutter and improving the clarity of error reports, ultimately making troubleshooting much easier and more effective.
 
+Another solution might be to use JavaScript’s Error class’s cause option as described [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#differentiate_between_similar_errors). Similar features are supported by other languages. However, this doesn’t support adding extra context to the error, without some type manipulation, and would require additional logic to extract the cause(s) for the logger when caught, which could be better encapsulated into a new type. This also wouldn’t allow for adding further explicit context, such as an indication of the logging level or HTTP response code for the error.
+
 [Read more](https://paulgrenyer.blogspot.com/2025/01/hierarchical-error-reducing-log.html)
 
 ## Install
@@ -44,7 +46,7 @@ const getController = () => {
         callService();
     } catch (error: any) {
         if (isHierarchicalError(error)) {
-            log(error.message, error.toContextJson());
+            log(error.message, error.toJSON());
         } else {
             log(error);
         }

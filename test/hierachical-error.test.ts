@@ -4,7 +4,12 @@ import { HierarchicalError, isHierarchicalError } from './../src/hierarchical-er
 describe('Hierarchical Error', () => {
     const context = {
         cause: {
-            cause: new Error('Something went wrong!'),
+            cause: {
+                cause: undefined,
+                message: 'Something went wrong!',
+                name: 'Error',
+                stack: expect.any(String),
+            },
             context: {
                 someContext: 'the url we called',
             },
@@ -16,15 +21,14 @@ describe('Hierarchical Error', () => {
         message: 'Service failed.',
     };
 
-    it('should have corect output', () => {
-        expect.assertions(3);
+    it('should have correct output', () => {
+        expect.assertions(2);
 
         try {
             callService();
         } catch (error: any) {
             const hierarchicalError = error as HierarchicalError;
             expect(hierarchicalError.message).toEqual('Service failed.');
-            expect(hierarchicalError.toContextJson()).toEqual(context);
             expect(hierarchicalError.toJSON()).toEqual(context);
         }
     });

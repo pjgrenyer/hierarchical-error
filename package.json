@@ -1,6 +1,6 @@
 {
     "name": "hierarchical-error",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Hierarchical Error - Reducing log messages and maintaining context.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
         "postbuild": "cpy '**/*' '!**/*.ts' '!**/*.tsx' ../dist/ --cwd=src/ --no-overwrite --parents",
         "test": "npx jest --coverage --detectOpenHandles",
         "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts' './*.json' './*.js' './*.mjs'",
-        "lint": "eslint --fix",
+        "lint": "npm run format && eslint --fix",
         "prepare": "husky"
     },
     "repository": {
