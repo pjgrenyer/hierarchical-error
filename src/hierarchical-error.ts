@@ -1,12 +1,12 @@
 import { errorToJson } from './error-to-json';
-import { HierarchicalContextItem } from './hierarchical-context-item';
+import { HierarchicalContextItem, HierarchicalContextItemOrAny } from './hierarchical-context-item';
 
 export class HierarchicalError extends Error {
     readonly cause;
     readonly context;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    constructor(message: string, context?: any, cause?: HierarchicalContextItem | any) {
+    constructor(message: string, context?: any, cause?: HierarchicalContextItemOrAny) {
         super(message);
         this.cause = cause;
         this.context = context;
