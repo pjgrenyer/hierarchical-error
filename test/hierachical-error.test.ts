@@ -22,14 +22,13 @@ describe('Hierarchical Error', () => {
     };
 
     it('should have correct output', () => {
-        expect.assertions(3);
+        expect.assertions(2);
 
         try {
             callService();
         } catch (error: any) {
             const hierarchicalError = error as HierarchicalError;
             expect(hierarchicalError.message).toEqual('Service failed.');
-            expect(hierarchicalError.toJSON()).toEqual(context);
             expect(hierarchicalError.toJSON()).toEqual(context);
         }
     });

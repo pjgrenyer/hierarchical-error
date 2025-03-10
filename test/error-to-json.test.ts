@@ -22,14 +22,14 @@ describe('Error To Json', () => {
         }
 
         toJSON = () => ({
-            message: this.message,
+            message: `toJSON: ${this.message}`,
         });
     }
 
     it("should return use object's toJSON", () => {
         const result = errorToJson(new MyError('Error!'));
         expect(result).toEqual({
-            message: 'Error!',
+            message: 'toJSON: Error!',
         });
     });
 });
