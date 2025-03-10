@@ -1,12 +1,5 @@
 import { errorToJson } from './error-to-json';
-
-interface HierarchicalContextItem {
-    message: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    cause?: HierarchicalContextItem | any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    context?: any;
-}
+import { HierarchicalContextItem } from './hierarchical-context-item';
 
 export class HierarchicalError extends Error {
     readonly cause;
