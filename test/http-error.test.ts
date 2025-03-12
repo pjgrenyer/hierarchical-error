@@ -41,6 +41,37 @@ describe('http error', () => {
         }
     });
 
+    it('should get root HierarchicalError', () => {
+        expect.assertions(5);
+
+        try {
+            callService();
+        } catch (error: any) {
+            const hierarchicalError = error as HierarchicalError;
+            const rootHierarchicalError = hierarchicalError.rootHierarchicalError();
+            expect(rootHierarchicalError.toJSON()).toEqual({
+                cause: {
+                    cause: undefined,
+                    message: 'Something went wrong!',
+                    name: 'Error',
+                    stack: expect.any(String),
+                },
+                context: {
+                    someContext: 'the url we called',
+                },
+                data: '{"data":"data"}',
+                message: 'Something went wrong!',
+                statusCode: 500,
+                statusText: 'server error',
+            });
+            expect(isHttpError(rootHierarchicalError)).toBeTruthy();
+            const httpError = rootHierarchicalError as HttpError;
+            expect(httpError.statusCode).toEqual(statusCode);
+            expect(httpError.statusText).toEqual(statusText);
+            expect(httpError.data).toEqual({ data: 'data' });
+        }
+    });
+
     describe('isHttpError', () => {
         it('is not HierarchicalError', () => {
             expect(isHierarchicalError(new Error())).toBeFalsy();

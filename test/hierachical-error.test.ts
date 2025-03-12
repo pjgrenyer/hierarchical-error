@@ -33,6 +33,28 @@ describe('Hierarchical Error', () => {
         }
     });
 
+    it('should get root HierarchicalError', () => {
+        expect.assertions(1);
+
+        try {
+            callService();
+        } catch (error: any) {
+            const hierarchicalError = error as HierarchicalError;
+            expect(hierarchicalError.rootHierarchicalError().toJSON()).toEqual({
+                cause: {
+                    cause: undefined,
+                    message: 'Something went wrong!',
+                    name: 'Error',
+                    stack: expect.any(String),
+                },
+                context: {
+                    someContext: 'the url we called',
+                },
+                message: 'Something went wrong!',
+            });
+        }
+    });
+
     describe('isHierarchicalError', () => {
         it('is not HierarchicalError', () => {
             expect(isHierarchicalError(new Error())).toBeFalsy();

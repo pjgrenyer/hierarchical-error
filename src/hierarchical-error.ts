@@ -17,6 +17,13 @@ export class HierarchicalError extends Error {
         context: this.context,
         cause: isHierarchicalError(this.cause) ? this.cause.toJSON() : errorToJson(this.cause),
     });
+
+    rootHierarchicalError = (): HierarchicalError => {
+        if (isHierarchicalError(this.cause)) {
+            return this.cause.rootHierarchicalError();
+        }
+        return this;
+    };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
