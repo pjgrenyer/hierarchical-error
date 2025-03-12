@@ -1,7 +1,63 @@
-import { HierarchicalError } from '../src/hierarchical-error';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { HierarchicalError, isHierarchicalError } from '../src/hierarchical-error';
+import { HttpError, isHttpError } from '../src/http-error';
+
+const data = 'data';
+const statusCode = 500;
+const statusText = 'server error';
 
 describe('http error', () => {
-    it('should fine the HTTP error', () => {});
+    const context = {
+        cause: {
+            cause: {
+                cause: undefined,
+                message: 'Something went wrong!',
+                name: 'Error',
+                stack: expect.any(String),
+            },
+            context: {
+                someContext: 'the url we called',
+            },
+            message: 'Something went wrong!',
+            data: '{"data":"data"}',
+            statusCode: 500,
+            statusText: 'server error',
+        },
+        context: {
+            someContext: 'The service we called',
+        },
+        message: 'Service failed.',
+    };
+
+    it('should have correct output', () => {
+        expect.assertions(2);
+
+        try {
+            callService();
+        } catch (error: any) {
+            const hierarchicalError = error as HierarchicalError;
+            expect(hierarchicalError.message).toEqual('Service failed.');
+            expect(hierarchicalError.toJSON()).toEqual(context);
+        }
+    });
+
+    describe('isHttpError', () => {
+        it('is not HierarchicalError', () => {
+            expect(isHierarchicalError(new Error())).toBeFalsy();
+        });
+
+        it('is not HttpError', () => {
+            expect(isHttpError(new Error())).toBeFalsy();
+        });
+
+        it('is HierarchicalError', () => {
+            expect(isHierarchicalError(new HierarchicalError('message', { someContext: 'someContext' }, new Error()))).toBeTruthy();
+        });
+
+        it('is HttpError', () => {
+            expect(new HttpError('message', { someContext: 'someContext' }, new Error(), { data, statusCode, statusText })).toBeTruthy();
+        });
+    });
 });
 
 const httpCall = () => {
@@ -9,7 +65,7 @@ const httpCall = () => {
     try {
         throw new Error('Something went wrong!');
     } catch (error: any) {
-        throw new HierarchicalError(error.message, { someContext }, error);
+        throw new HttpError(error.message, { someContext }, error, { data: { data }, statusCode, statusText });
     }
 };
 
