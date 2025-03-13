@@ -12,18 +12,20 @@ export class HierarchicalError extends Error {
         this.context = context;
     }
 
-    toJSON = (): HierarchicalContextItem => ({
-        message: this.message,
-        context: this.context,
-        cause: isHierarchicalError(this.cause) ? this.cause.toJSON() : errorToJson(this.cause),
-    });
+    toJSON(): HierarchicalContextItem {
+        return {
+            message: this.message,
+            context: this.context,
+            cause: isHierarchicalError(this.cause) ? this.cause.toJSON() : errorToJson(this.cause),
+        };
+    }
 
-    rootHierarchicalError = (): HierarchicalError => {
+    rootHierarchicalError(): HierarchicalError {
         if (isHierarchicalError(this.cause)) {
             return this.cause.rootHierarchicalError();
         }
         return this;
-    };
+    }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
