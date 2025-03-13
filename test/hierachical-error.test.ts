@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { errorToJson } from '../src/error-to-json';
 import { HierarchicalError, isHierarchicalError } from './../src/hierarchical-error';
 
 describe('Hierarchical Error', () => {
@@ -51,6 +52,22 @@ describe('Hierarchical Error', () => {
                     someContext: 'the url we called',
                 },
                 message: 'Something went wrong!',
+            });
+        }
+    });
+
+    it('should get root error', () => {
+        expect.assertions(1);
+
+        try {
+            callService();
+        } catch (error: any) {
+            const hierarchicalError = error as HierarchicalError;
+            expect(errorToJson(hierarchicalError.rootError())).toEqual({
+                cause: undefined,
+                message: 'Something went wrong!',
+                name: 'Error',
+                stack: expect.any(String),
             });
         }
     });

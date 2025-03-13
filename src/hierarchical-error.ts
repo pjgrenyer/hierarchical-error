@@ -26,6 +26,14 @@ export class HierarchicalError extends Error {
         }
         return this;
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    rootError(): HierarchicalError | any {
+        if (this.cause) {
+            return isHierarchicalError(this.cause) ? this.cause.rootError() : this.cause;
+        }
+        return this;
+    }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
