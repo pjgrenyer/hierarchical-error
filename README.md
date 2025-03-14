@@ -20,7 +20,9 @@ Another solution might be to use JavaScript’s Error class’s cause option as 
 npm i -save hierarchical-error
 ```
 
-## Example
+## Examples
+
+### General
 
 ```
 const httpCall = () => {
