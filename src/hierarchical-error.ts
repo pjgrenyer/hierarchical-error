@@ -34,6 +34,15 @@ export class HierarchicalError extends Error {
         }
         return this;
     }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    next<T extends new (...args: any[]) => HierarchicalError, HierarchicalError>(Type: T) {
+        if (this instanceof Type) {
+            return this;
+        } else if (this.cause && isHierarchicalError(this.cause)) {
+            this.cause.next(Type);
+        }
+    }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -72,6 +72,18 @@ describe('http error', () => {
         }
     });
 
+    it.skip('should get new HttpError', () => {
+        //  expect.assertions(5);
+
+        try {
+            callService();
+        } catch (error: any) {
+            const hierarchicalError = error as HierarchicalError;
+            const rootHierarchicalError = hierarchicalError.rootHierarchicalError();
+            expect(rootHierarchicalError.next(HierarchicalError)).toEqual({});
+        }
+    });
+
     describe('isHttpError', () => {
         it('is not HierarchicalError', () => {
             expect(isHierarchicalError(new Error())).toBeFalsy();
